@@ -1,9 +1,13 @@
 const campo = document.querySelector("input");
-const botaoAdicionar = document.getElementById("buttonHistorias"); 
+const botaoAdicionar = document.getElementById("buttonHistorias");
+const progressBar = document.getElementById("progress-bar");
+const progressText = document.getElementById("progress-text");
 
+let progresso = 0;
+const MAX_HISTORIAS = 10; // Define quantas histórias completam 100%
 
 function adicionarItem() {
-    if (campo.value.trim() !== "") { 
+    if (campo.value.trim() !== "") {
         let novoLi = document.createElement("li");
         let novoSpan = document.createElement("span");
         let novoBotao = document.createElement("button");
@@ -14,14 +18,31 @@ function adicionarItem() {
         novoLi.appendChild(novoSpan);
         novoLi.appendChild(novoBotao);
 
-        const interesses = document.querySelector("ol");
-        interesses.appendChild(novoLi);
+        document.querySelector("ol").appendChild(novoLi);
 
         novoBotao.onclick = function () {
-            interesses.removeChild(novoLi);
+            this.parentElement.remove();
+            atualizarProgresso(-10); // Remove 10% se o item for deletado
         };
 
-        campo.value = ""; 
+        campo.value = "";
+        
+        atualizarProgresso(10);
+    }
+}
+
+function atualizarProgresso(valor) {
+    progresso += valor;
+    progresso = Math.min(100, Math.max(0, progresso)); 
+    
+    progressBar.style.width = `${progresso}%`;
+    progressText.textContent = `${progresso}% concluído`;
+    
+    // Muda a cor se atingir 100%
+    if (progresso === 100) {
+        progressBar.style.backgroundColor = "#2E7D32"; 
+    } else {
+        progressBar.style.backgroundColor = "#4CAF50";
     }
 }
 
