@@ -232,7 +232,7 @@ let tarefas = [
 ];
 
 let dailyScrum = [];
-let membrosTime = [];
+
 
 let sprintAtual = sprints[0];
 
@@ -356,86 +356,10 @@ function mostrarConteudo(sectionId) {
   }
 }
 
-
-
-
-
-// Funções para o modal de sprint
-const modalSprint = document.getElementById("modal-sprint");
-const formSprint = document.getElementById("sprint-form");
-
-document.getElementById("criar-sprint").addEventListener("click", () => {
-    formSprint.reset();
-    modalSprint.style.display = "block";
-});
-
-formSprint.onsubmit = function(event) { /* ... (código anterior) */ };
-
-function fecharModalSprint() {
-    modalSprint.style.display = "none";
-}
-
-function atualizarSprintInfo() {
-    atualizarElemento("sprint-nome", sprintAtual ? sprintAtual.nome : "-");
-    atualizarElemento("sprint-meta", sprintAtual ? sprintAtual.meta : "-");
-    atualizarElemento("sprint-inicio", sprintAtual ? sprintAtual.inicio : "-");
-    atualizarElemento("sprint-fim", sprintAtual ? sprintAtual.fim : "-");
-    atualizarElemento("sprint-status", sprintAtual ? sprintAtual.status : "-");
-    atualizarBotoesSprint();
-}
-
-document.getElementById("iniciar-sprint").addEventListener("click", () => {
-    if(sprintAtual){
-        sprintAtual.status = "Em Andamento";
-        atualizarSprintInfo();
-    }
-});
-
-document.getElementById("concluir-sprint").addEventListener("click", () => {
-    if(sprintAtual){
-        sprintAtual.status = "Concluído";
-        atualizarSprintInfo();
-    }
-});
-
-function atualizarBotoesSprint() {
-    const iniciarSprintBtn = document.getElementById("iniciar-sprint");
-    const concluirSprintBtn = document.getElementById("concluir-sprint");
-
-    if (sprintAtual) {
-        iniciarSprintBtn.style.display = sprintAtual.status === "Planejado" ? "inline-block" : "none";
-        concluirSprintBtn.style.display = sprintAtual.status === "Em Andamento" ? "inline-block" : "none";
-
-        const sprintAcoes = document.getElementById("sprint-acoes");
-        sprintAcoes.innerHTML = "";
-
-        if (sprintAtual.status === "Planejado") {
-            sprintAcoes.appendChild(iniciarSprintBtn);
-        } else if (sprintAtual.status === "Em Andamento") {
-            sprintAcoes.appendChild(concluirSprintBtn);
-        }
-    }
-}
-
 // Funções para manipular membros do time
-const modalMembro = document.getElementById("modal-membro");
-const closeModalBtnMembro = modalMembro.querySelector(".close-btn");
-const adicionarMembroBtn = document.getElementById("adicionar-membro");
-const formMembro = document.getElementById("membro-form");
-const listaMembros = document.getElementById("lista-membros");
 
-closeModalBtnMembro.onclick = function() { /* ... (código anterior) */ };
-adicionarMembroBtn.onclick = function() { /* ... (código anterior) */ };
 window.onclick = function(event) { /* ... (código anterior) */ };
-formMembro.onsubmit = function(event) { /* ... (código anterior) */ };
-function atualizarListaMembros() { /* ... (código anterior) */ }
 
-// Funções para manipular o modal de tarefas
-// ... (código anterior - modalTarefa, closeModalTarefa, formTarefa, adicionarTarefaBtn, etc.)
-
-
-// Inicialização
-// ... (chamadas das funções de atualização, criarColunasKanban, preencherDashboard, mostrarConteudo)
 
 // Funções para o Dashboard
 function preencherDashboard() { /* ... (código anterior) */ }
@@ -456,32 +380,77 @@ function criarColunasKanban() {
     atualizarKanban();
 }
 
-// Preenchimento dinâmico dos formulários
-document.getElementById("daily-form").innerHTML = `
-    <label for="membro">Membro:</label>
-    <select id="membro">
-        <option value="ana">Ana</option>
-        <option value="joao">João</option>
-        <option value="maria">Maria</option>
-    </select>
+const membrosTime = [];
 
-    <label for="ontem">O que você fez ontem?</label>
-    <textarea id="ontem"></textarea>
+const modalMembro = document.getElementById("modal-membro");
+const adicionarMembroBtn = document.getElementById("adicionar-membro");
+const formMembro = document.getElementById("membro-form");
+const listaMembros = document.getElementById("lista-membros");
 
-    <label for="hoje">O que você fará hoje?</label>
-    <textarea id="hoje"></textarea>
+adicionarMembroBtn.onclick = function(){
+    formMembro.reset();
+    modalMembro.style.display = "block";
+};
 
-    <label for="impedimentos">Impedimentos:</label>
-    <textarea id="impedimentos"></textarea>
+formMembro.onsubmit = function(event){
+    event.preventDefault();
 
-    <button type="button" onclick="adicionarDaily()">Adicionar</button>
-`;
+    // 2. Corrigido: adicionado .value para email e funcao
+    const nome = document.getElementById("membro-nome").value;
+    const email = document.getElementById("membro-email").value;
+    const funcao = document.getElementById("membro-funcao").value;
 
-document.getElementById("historia-form").innerHTML = `<!-- ... (código anterior) -->`;
-document.getElementById("sprint-form").innerHTML = `<!-- ... (código anterior) -->`;
-document.getElementById("tarefa-form").innerHTML = `<!-- ... (código anterior) -->`;
+    adicionarMembro(nome, email, funcao);
 
-document.getElementById("sprint-info").innerHTML = `<h3>Sprint Atual: <span id="sprint-nome">${sprintAtual ? sprintAtual.nome : '-'}</span></h3><p>Meta: <span id="sprint-meta">${sprintAtual ? sprintAtual.meta : '-'}</span></p><p>Início: <span id="sprint-inicio">${sprintAtual ? sprintAtual.inicio : '-'}</span> | Fim: <span id="sprint-fim">${sprintAtual ? sprintAtual.fim : '-'}</span></p><p>Status: <span id="sprint-status">${sprintAtual ? sprintAtual.status : '-'}</span></p>`;
-document.getElementById("sprint-acoes").innerHTML = `<button id="criar-sprint">Criar Sprint</button><button id="iniciar-sprint">Iniciar Sprint</button><button id="concluir-sprint">Concluir Sprint</button>`;
+    fecharModalMembro();
+    return false;
+};
 
-// ... (código para simulação de relatórios, etc.)
+function adicionarMembro(nome, email, funcao){
+    const team = {  
+        nome,
+        email,
+        funcao
+    };
+
+    membrosTime.push(team);
+    renderizarTime();
+};
+
+function renderizarTime(){
+    listaMembros.innerHTML = "";
+
+    // 3. Corrigido: mudado 'time' para 'team' para ser consistente
+    membrosTime.forEach(team => {
+        const li = document.createElement("li");
+        li.dataset.nome = team.nome;
+
+        const span = document.createElement("span");
+        span.textContent = `${team.nome} \n ${team.email} \n ${team.funcao}`;
+
+        const removerBtn = document.createElement("button");
+        removerBtn.textContent = "X";
+        removerBtn.className = "remover";
+
+        // 4. Adicionada função removerMembro
+        removerBtn.onclick = () => {
+            const index = membrosTime.findIndex(m => m.nome === team.nome);
+            if (index !== -1) {
+                membrosTime.splice(index, 1);
+                renderizarTime();
+            }
+        };
+
+        li.appendChild(span);
+        li.appendChild(removerBtn);
+        
+        // 5. Faltava adicionar o li à lista
+        listaMembros.appendChild(li);
+    });
+}
+
+function fecharModalMembro() {
+    modalMembro.style.display = "none";
+}
+
+renderizarTime();

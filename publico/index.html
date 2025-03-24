@@ -89,11 +89,21 @@
 
             <div id="modal-membro" class="modal">
                 <div class="modal-content">
-                    <span class="close-btn">×</span>
-                    <h3>Adicionar/Editar Membro</h3>
+                    <span class="close-btn" onclick="fecharModalMembro()">×</span>
+                    <h3Modal>Adicionar Membro</h3Modal>
                     <form id="membro-form">
-                        <input type="text" id="membro-nome" placeholder="Nome" required>
-                        <input type="text" id="membro-funcao" placeholder="Função" required>
+                        <div>
+                            <label for="membro-nome">Nome:</label>
+                            <input type="text" id="membro-nome" name="membro-nome"  required>
+                        </div>
+                        <div>
+                            <label for="membro-funcao">Função:</label>
+                            <input type="text" id="membro-funcao" name="membro-funcao"  required>
+                        </div>
+                        <div>
+                            <label for="membro-email">Email:</label>
+                            <input type="email" name="membro-email" id="membro-email" required>
+                        </div>
                         <button type="submit">Salvar</button>
                     </form>
                 </div>
