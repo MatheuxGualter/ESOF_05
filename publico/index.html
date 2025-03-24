@@ -51,18 +51,16 @@
                 </div>
             <div class="info-card">
                 <h3>Histórias Concluídas</h3>
-                <input type="text" id="hist" name="hist" placeholder="Digite a historia">
-                <ol>
+                <ol id="historias-concluidas">
 
                 </ol>
-                <button id="buttonHistorias">Adicionar Histórias</button>
             </div>
         </section>
 
         <section id="backlog-produto" class="content">
             <h2>Product Backlog</h2>
             <button id="criar-historia">Criar História</button>
-            <ul id="lista-historias"></ul>
+            <ol id="lista-historias"></ol>
             <div id="backlog-acoes">
                 <button id="ordenar-backlog">Ordenar por Prioridade</button>
             </div>
@@ -105,8 +103,30 @@
         <div id="modal-historia" class="modal">
             <div class="modal-content">
                 <span class="close-btn" onclick="fecharModalHistoria()">×</span>
-                <h3>Criar/Editar História</h3>
-                <form id="historia-form"></form>
+                <h3 class="h3Modal">Criar/Editar História</h3>
+                <form id="historia-form">
+                    <div class="form-group">
+                        <label for="titulo-historia">Título:</label>
+                        <input type="text" id="titulo-historia" name="titulo-historia" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao-historia">Descrição:</label>
+                        <textarea id="descricao-historia" name="descricao-historia" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="prioridade-historia">Prioridade:</label>
+                        <select id="prioridade-historia" name="prioridade-historia" required>
+                            <option value="1">Alta</option>
+                            <option value="2">Média</option>
+                            <option value="3">Baixa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pontos-historia">Story Points:</label>
+                        <input type="number" id="pontos-historia" name="pontos-historia" min="1" max="20" value="1">
+                    </div>
+                    <button type="submit">Salvar</button>
+                </form>
             </div>
         </div>
 

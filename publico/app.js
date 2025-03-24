@@ -1,52 +1,153 @@
-const campo = document.querySelector("input");
-const botaoAdicionar = document.getElementById("buttonHistorias");
+// Elementos do DOM
+const listaHistorias = document.getElementById("lista-historias");
+const historiasConcluidas = document.getElementById("historias-concluidas");
+const ordenarBacklogBtn = document.getElementById("ordenar-backlog");
 const progressBar = document.getElementById("progress-bar");
 const progressText = document.getElementById("progress-text");
 
+// Variáveis de estado
+let historiasBack = [];
 let progresso = 0;
 const MAX_HISTORIAS = 10; // Define quantas histórias completam 100%
 
-function adicionarItem() {
-    if (campo.value.trim() !== "") {
-        let novoLi = document.createElement("li");
-        let novoSpan = document.createElement("span");
-        let novoBotao = document.createElement("button");
+// Modal de criação de histórias (seu código existente)
+const modalHistoria = document.getElementById("modal-historia");
+const criarHistoriaBtn = document.getElementById("criar-historia");
+const formHistoria = document.getElementById("historia-form");
 
-        novoSpan.textContent = campo.value;
-        novoBotao.textContent = '❌';
+criarHistoriaBtn.onclick = function() {
+    formHistoria.reset();
+    modalHistoria.style.display = "block";
+};
 
-        novoLi.appendChild(novoSpan);
-        novoLi.appendChild(novoBotao);
+formHistoria.onsubmit = function(event) {
+    event.preventDefault();
+    const titulo = document.getElementById("titulo-historia").value;
+    const prioridade = document.getElementById("prioridade-historia").value;
+    
+    // Adiciona a nova história ao backlog
+    adicionarHistoriaBacklog(titulo, prioridade);
+    
+    fecharModalHistoria();
+    return false;
+};
 
-        document.querySelector("ol").appendChild(novoLi);
+function fecharModalHistoria() {
+    modalHistoria.style.display = "none";
+}
 
-        novoBotao.onclick = function () {
-            this.parentElement.remove();
-            atualizarProgresso(-10); // Remove 10% se o item for deletado
-        };
+// Função para adicionar história ao backlog
+function adicionarHistoriaBacklog(titulo, prioridade) {
+    const historia = {
+        id: Date.now(),
+        titulo,
+        prioridade,
+        concluida: false
+    };
+    
+    historiasBack.push(historia);
+    renderizarBacklog();
+}
 
-        campo.value = "";
-        
-        atualizarProgresso(10);
+// Função para renderizar o backlog
+function renderizarBacklog() {
+    listaHistorias.innerHTML = "";
+    
+    historiasBack
+        .filter(historia => !historia.concluida)
+        .forEach(historia => {
+            const li = document.createElement("li");
+            li.dataset.id = historia.id;
+            
+            const span = document.createElement("span");
+            span.textContent = `${historia.titulo} (Prioridade: ${historia.prioridade})`;
+            
+            const concluirBtn = document.createElement("button");
+            concluirBtn.textContent = "✓ Concluir";
+            concluirBtn.className = "concluir";
+            
+            const removerBtn = document.createElement("button");
+            removerBtn.textContent = "X";
+            removerBtn.className = "remover";
+            
+            concluirBtn.onclick = () => concluirHistoria(historia.id);
+            removerBtn.onclick = () => removerHistoria(historia.id);
+            
+            li.appendChild(span);
+            li.appendChild(concluirBtn);
+            li.appendChild(removerBtn);
+            
+            listaHistorias.appendChild(li);
+        });
+}
+
+// Função para concluir história (move para o dashboard)
+function concluirHistoria(id) {
+    const historiaIndex = historiasBack.findIndex(h => h.id === id);
+    if (historiaIndex !== -1) {
+        historiasBack[historiaIndex].concluida = true;
+        renderizarBacklog();
+        renderizarHistoriasConcluidas();
+        atualizarProgresso(10); // Aumenta 10% no progresso
     }
 }
 
+// Função para renderizar histórias concluídas no dashboard
+function renderizarHistoriasConcluidas() {
+    historiasConcluidas.innerHTML = "";
+    
+    historiasBack
+        .filter(historia => historia.concluida)
+        .forEach(historia => {
+            const li = document.createElement("li");
+            li.dataset.id = historia.id;
+            
+            const span = document.createElement("span");
+            span.textContent = historia.titulo;
+            
+            const removerBtn = document.createElement("button");
+            removerBtn.textContent = "❌";
+            removerBtn.className = "remover";
+            
+            removerBtn.onclick = () => {
+                const historiaIndex = historiasBack.findIndex(h => h.id === historia.id);
+                if (historiaIndex !== -1) {
+                    historiasBack.splice(historiaIndex, 1);
+                    renderizarHistoriasConcluidas();
+                    atualizarProgresso(-10); // Diminui 10% no progresso
+                }
+            };
+            
+            li.appendChild(span);
+            li.appendChild(removerBtn);
+            
+            historiasConcluidas.appendChild(li);
+        });
+}
+
+// Função para atualizar a barra de progresso (igual à anterior)
 function atualizarProgresso(valor) {
     progresso += valor;
-    progresso = Math.min(100, Math.max(0, progresso)); 
+    progresso = Math.min(100, Math.max(0, progresso));
     
     progressBar.style.width = `${progresso}%`;
     progressText.textContent = `${progresso}% concluído`;
     
-    // Muda a cor se atingir 100%
     if (progresso === 100) {
-        progressBar.style.backgroundColor = "#2E7D32"; 
+        progressBar.style.backgroundColor = "#2E7D32";
     } else {
         progressBar.style.backgroundColor = "#4CAF50";
     }
 }
 
-botaoAdicionar.addEventListener("click", adicionarItem);
+// Função para ordenar o backlog por prioridade
+ordenarBacklogBtn.onclick = function() {
+    historiasBack.sort((a, b) => a.prioridade - b.prioridade);
+    renderizarBacklog();
+};
+
+// Inicialização
+renderizarBacklog();
 
 // Dados fictícios (últimas 5 sprints)
 const sprintGrafico = ["Sprint 1", "Sprint 2", "Sprint 3", "Sprint 4", "Sprint 5"];
@@ -256,21 +357,6 @@ function mostrarConteudo(sectionId) {
 }
 
 
-// Funções para manipular o modal de histórias
-const modalHistoria = document.getElementById("modal-historia");
-const criarHistoriaBtn = document.getElementById("criar-historia");
-const formHistoria = document.getElementById("historia-form");
-
-criarHistoriaBtn.onclick = function() {
-    formHistoria.reset();
-    modalHistoria.style.display = "block";
-}
-
-formHistoria.onsubmit = function(event) { /* ... (código anterior) */ };
-
-function fecharModalHistoria() {
-    modalHistoria.style.display = "none";
-}
 
 
 

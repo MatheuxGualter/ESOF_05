@@ -481,7 +481,7 @@ li > button{
 }
 
 ol > li {
-    width: 240px;
+    width: 300px;
     padding: 5px 5px 5px 20px;
     margin: 4px;
     border-radius: 5px;
@@ -509,4 +509,115 @@ ol > li {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 5px;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: black;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.h3Modal{
+    color: black;
+}
+
+/* Estilo para os itens da lista */
+#lista-historias li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid #4CAF50;
+}
+
+/* Estilo para o texto da história */
+#lista-historias li span {
+    flex-grow: 1;
+    margin-right: 15px;
+}
+
+/* Estilo base para os botões */
+#lista-historias li button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    margin-left: 8px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Botão Concluir */
+#lista-historias li button.concluir {
+    background-color: #4CAF50;
+    color: white;
+    min-width: 80px;
+    justify-content: center;
+}
+
+/* Botão Remover */
+#lista-historias li button.remover {
+    background-color: #f44336;
+    color: white;
+    padding: 6px 8px;
+    min-width: 32px;
+    justify-content: center;
 }
