@@ -504,3 +504,9 @@ ol > li {
     border-radius: 10px;
     transition: width 0.3s ease; /* Animação suave */
 }
+
+.chart-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}

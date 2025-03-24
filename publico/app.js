@@ -48,6 +48,64 @@ function atualizarProgresso(valor) {
 
 botaoAdicionar.addEventListener("click", adicionarItem);
 
+// Dados fictícios (últimas 5 sprints)
+const sprintGrafico = ["Sprint 1", "Sprint 2", "Sprint 3", "Sprint 4", "Sprint 5"];
+const pontosConcluidos = [22, 27, 25, 30, 28]; // Pontos por sprint
+const metaPorSprint = 25; // Meta fictícia
+
+// Calcula a média
+const media = pontosConcluidos.reduce((total, pontos) => total + pontos, 0) / pontosConcluidos.length;
+document.getElementById("media-velocidade").textContent = media.toFixed(1);
+
+// Cria o gráfico
+const ctx = document.getElementById('velocity-chart').getContext('2d');
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: sprintGrafico,
+        datasets: [
+            {
+                label: 'Pontos Concluídos',
+                data: pontosConcluidos,
+                borderColor: '#4CAF50',
+                backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                tension: 0.3,
+                fill: true
+            },
+            {
+                label: 'Meta',
+                data: Array(sprintGrafico.length).fill(metaPorSprint),
+                borderColor: '#FF9800',
+                borderDash: [5, 5],
+                borderWidth: 1,
+                pointRadius: 0 // Remove os pontos da linha de meta
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: (context) => `${context.dataset.label}: ${context.raw} pts`
+                }
+            },
+            legend: {
+                position: 'top'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Pontos Concluídos'
+                }
+            }
+        }
+    }
+});
+
 // Simulação de dados
 let historias = [
     { id: 1, titulo: "Implementar Login", descricao: "Criar tela de login e fluxo de autenticação.", pontos: 5, prioridade: "alta", status: "doing" },
