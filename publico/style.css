@@ -124,7 +124,6 @@ h2 {
     padding-bottom: 10px;
     margin-bottom: 20px;
 
-
 }
 
 .nav-link {
@@ -421,18 +420,17 @@ button {
     border-radius: 5px;
 
 
-    transition: background-color 0.3s ease; /* Adiciona uma transição suave */
-
 }
 
-
-
-
-button:hover {
-    background-color: #45a049; /* Cor mais escura ao passar o mouse */
+li > button{
+    font-size: smaller;
+    color: red;
+    border: none;
+    background-color: rgb(189, 217, 240);
+    cursor: pointer;
+    width: 5px;
 
 }
-
 
 
 /* Responsividade */
@@ -480,8 +478,13 @@ button:hover {
         grid-template-columns: 1fr; /* Uma coluna em telas menores */
 
     }
+}
 
-
-
-
+ol > li {
+    width: 240px;
+    padding: 5px 5px 5px 20px;
+    margin: 4px;
+    border-radius: 5px;
+    display: inline-block;
+    background-color: rgb(189, 217, 240);
 }

@@ -1,3 +1,32 @@
+const campo = document.querySelector("input");
+const botaoAdicionar = document.getElementById("buttonHistorias"); 
+
+
+function adicionarItem() {
+    if (campo.value.trim() !== "") { 
+        let novoLi = document.createElement("li");
+        let novoSpan = document.createElement("span");
+        let novoBotao = document.createElement("button");
+
+        novoSpan.textContent = campo.value;
+        novoBotao.textContent = '❌';
+
+        novoLi.appendChild(novoSpan);
+        novoLi.appendChild(novoBotao);
+
+        const interesses = document.querySelector("ol");
+        interesses.appendChild(novoLi);
+
+        novoBotao.onclick = function () {
+            interesses.removeChild(novoLi);
+        };
+
+        campo.value = ""; 
+    }
+}
+
+botaoAdicionar.addEventListener("click", adicionarItem);
+
 // Simulação de dados
 let historias = [
     { id: 1, titulo: "Implementar Login", descricao: "Criar tela de login e fluxo de autenticação.", pontos: 5, prioridade: "alta", status: "doing" },
