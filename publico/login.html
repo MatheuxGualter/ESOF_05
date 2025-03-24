@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCRUM Management Tool</title>
+    <link rel="stylesheet" href="styleLogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+          <h1>SCRUM MANAGEMENT TOOL</h1>
+          <a href="login.html" class="nav-link" >Login</a>
+        </header>
+    
+        <nav>
+          <ul>
+            <li><a href="#dashboard" class="nav-link active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="#backlog-produto" class="nav-link"><i class="fas fa-clipboard-list"></i> Product Backlog</a></li>
+            <li><a href="#sprints" class="nav-link"><i class="fas fa-running"></i> Sprints</a></li>
+            <li><a href="#membros-time" class="nav-link"><i class="fas fa-users"></i> Time</a></li>
+          </ul>
+        </nav>
+
+        <main>
+        <div class="containerlogin">
+            <h2 class="logintitulo">Login</h2>
+            <form action="/publico/login/login.php" method="POST">
+              <div>
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+              <div>
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required>
+              </div>
+              <!-- sera substituido por um botao de login -->
+              <a class="botao" href="/ESOF_05/publico/index.html">Entrar</a>
+            </form>
+          </div>
+        </main>
+
+    
+</body>
+</html>

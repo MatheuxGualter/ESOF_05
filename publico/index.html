@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCRUM Management Tool</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>SCRUM MANAGEMENT TOOL</h1>
+      <a href="login.html" class="nav-link" >Login</a>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="#dashboard" class="nav-link active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+        <li><a href="#backlog-produto" class="nav-link"><i class="fas fa-clipboard-list"></i> Product Backlog</a></li>
+        <li><a href="#sprints" class="nav-link"><i class="fas fa-running"></i> Sprints</a></li>
+        <li><a href="#membros-time" class="nav-link"><i class="fas fa-users"></i> Time</a></li>
+      </ul>
+    </nav>
+
+    <main>
+        <section id="dashboard" class="content active">
+            <h2>Dashboard</h2>
+            <div id="dashboard-info">
+                <div class="info-card">
+                    <h3>Velocidade do Time</h3>
+                    <p><span id="velocidade-time"></span></p>
+                </div>
+                <div class="info-card">
+                    <h3>Histórias Concluídas</h3>
+                    <p><span id="historias-concluidas"></span></p>
+                </div>
+            </div>
+            <div id="burndown-chart">
+                <img src="burndown_placeholder.png" alt="Gráfico Burndown">
+            </div>
+        </section>
+
+        <section id="backlog-produto" class="content">
+            <h2>Product Backlog</h2>
+            <button id="criar-historia">Criar História</button>
+            <ul id="lista-historias"></ul>
+            <div id="backlog-acoes">
+                <button id="ordenar-backlog">Ordenar por Prioridade</button>
+            </div>
+        </section>
+
+        <section id="sprints" class="content">
+            <h2>Sprints</h2>
+            <div id="sprint-info"></div>
+            <div id="sprint-acoes"></div>
+            <h3>Sprint Backlog</h3>
+            <div id="kanban"></div>
+            <br>
+            <div id="sprint-backlog-acoes">
+                <button id="adicionar-tarefa">Adicionar Tarefa</button>
+            </div>
+
+            <h3>Daily Scrum</h3>
+            <form id="daily-form"></form>
+            <ul id="daily-list"></ul>
+        </section>
+
+        <section id="membros-time" class="content">
+            <h2>Membros do Time</h2>
+            <button id="adicionar-membro">Adicionar Membro</button>
+            <ul id="lista-membros"></ul>
+
+            <div id="modal-membro" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h3>Adicionar/Editar Membro</h3>
+                    <form id="membro-form">
+                        <input type="text" id="membro-nome" placeholder="Nome" required>
+                        <input type="text" id="membro-funcao" placeholder="Função" required>
+                        <button type="submit">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <div id="modal-historia" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="fecharModalHistoria()">×</span>
+                <h3>Criar/Editar História</h3>
+                <form id="historia-form"></form>
+            </div>
+        </div>
+
+        <div id="modal-sprint" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="fecharModalSprint()">×</span>
+                <h3>Criar Sprint</h3>
+                <form id="sprint-form"></form>
+            </div>
+        </div>
+
+
+        <div id="modal-tarefa" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="fecharModalTarefa()">×</span>
+                <h3>Adicionar Tarefa</h3>
+                <form id="tarefa-form"></form>
+            </div>
+        </div>
+    </main>
+
+
+    <footer></footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
