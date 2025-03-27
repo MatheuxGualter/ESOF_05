@@ -215,26 +215,6 @@ let historias = [
     { id: 4, titulo: "Testes unitários", descricao: "Escrever testes unitários para os componentes.", pontos: 3, prioridade: "baixa", status: "done" }
 ];
 
-let sprints = [
-    { id: 1, nome: "Sprint 1", meta: "Finalizar tela de login e Kanban.", inicio: "2024-10-26", fim: "2024-11-09", status: "Planejado" }
-];
-
-let tarefas = [
-    { id: 1, descricao: "Criar componente de login", historiaId: 1, status: "doing" },
-    { id: 2, descricao: "Implementar drag and drop no Kanban", historiaId: 2, status: "todo" },
-    { id: 3, descricao: "Conectar API de autenticação", historiaId: 1, status: "doing" },
-    { id: 4, descricao: "Escrever testes para o componente de login", historiaId: 1, status: "testing" },
-    { id: 5, descricao: "Projetar layout do Kanban", historiaId: 2, status: "todo" },
-    { id: 6, descricao: "Implementar lógica de drag and drop", historiaId: 2, status: "todo" },
-    { id: 7, descricao: "Testar a integração da API", historiaId: 3, status: "backlog" },
-    { id: 8, descricao: "Escrever testes unitários para a API", historiaId: 3, status: "backlog" },
-    { id: 9, descricao: "Finalizar testes unitários do componente de login", historiaId: 4, status: "done" }
-];
-
-let dailyScrum = [];
-
-
-let sprintAtual = sprints[0];
 
 // Funções utilitárias
 function atualizarElemento(id, conteudo) {
@@ -454,3 +434,16 @@ function fecharModalMembro() {
 }
 
 renderizarTime();
+
+// Sprint
+document.getElementById('adicionar-tarefa').addEventListener('click', () => {
+    document.getElementById('modal-sprint').style.display = 'block';
+});
+
+const modalSprint = document.getElementById("modal-sprint");
+
+fecharModalSprint();
+
+function fecharModalSprint() {
+    modalSprint.style.display = "none";
+}
