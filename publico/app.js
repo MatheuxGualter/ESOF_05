@@ -1,16 +1,15 @@
-// Elementos do DOM
+// HISTÓRIA
+
 const listaHistorias = document.getElementById("lista-historias");
 const historiasConcluidas = document.getElementById("historias-concluidas");
 const ordenarBacklogBtn = document.getElementById("ordenar-backlog");
 const progressBar = document.getElementById("progress-bar");
 const progressText = document.getElementById("progress-text");
 
-// Variáveis de estado
 let historiasBack = [];
 let progresso = 0;
-const MAX_HISTORIAS = 10; // Define quantas histórias completam 100%
+const MAX_HISTORIAS = 10; 
 
-// Modal de criação de histórias (seu código existente)
 const modalHistoria = document.getElementById("modal-historia");
 const criarHistoriaBtn = document.getElementById("criar-historia");
 const formHistoria = document.getElementById("historia-form");
@@ -25,7 +24,6 @@ formHistoria.onsubmit = function(event) {
     const titulo = document.getElementById("titulo-historia").value;
     const prioridade = document.getElementById("prioridade-historia").value;
     
-    // Adiciona a nova história ao backlog
     adicionarHistoriaBacklog(titulo, prioridade);
     
     fecharModalHistoria();
@@ -36,7 +34,6 @@ function fecharModalHistoria() {
     modalHistoria.style.display = "none";
 }
 
-// Função para adicionar história ao backlog
 function adicionarHistoriaBacklog(titulo, prioridade) {
     const historia = {
         id: Date.now(),
@@ -49,7 +46,6 @@ function adicionarHistoriaBacklog(titulo, prioridade) {
     renderizarBacklog();
 }
 
-// Função para renderizar o backlog
 function renderizarBacklog() {
     listaHistorias.innerHTML = "";
     
@@ -81,18 +77,17 @@ function renderizarBacklog() {
         });
 }
 
-// Função para concluir história (move para o dashboard)
 function concluirHistoria(id) {
     const historiaIndex = historiasBack.findIndex(h => h.id === id);
     if (historiaIndex !== -1) {
         historiasBack[historiaIndex].concluida = true;
         renderizarBacklog();
         renderizarHistoriasConcluidas();
-        atualizarProgresso(10); // Aumenta 10% no progresso
+        atualizarProgresso(10); 
     }
 }
 
-// Função para renderizar histórias concluídas no dashboard
+
 function renderizarHistoriasConcluidas() {
     historiasConcluidas.innerHTML = "";
     
@@ -114,7 +109,7 @@ function renderizarHistoriasConcluidas() {
                 if (historiaIndex !== -1) {
                     historiasBack.splice(historiaIndex, 1);
                     renderizarHistoriasConcluidas();
-                    atualizarProgresso(-10); // Diminui 10% no progresso
+                    atualizarProgresso(-10); 
                 }
             };
             
@@ -125,7 +120,7 @@ function renderizarHistoriasConcluidas() {
         });
 }
 
-// Função para atualizar a barra de progresso (igual à anterior)
+
 function atualizarProgresso(valor) {
     progresso += valor;
     progresso = Math.min(100, Math.max(0, progresso));
@@ -140,25 +135,23 @@ function atualizarProgresso(valor) {
     }
 }
 
-// Função para ordenar o backlog por prioridade
+
 ordenarBacklogBtn.onclick = function() {
     historiasBack.sort((a, b) => a.prioridade - b.prioridade);
     renderizarBacklog();
 };
 
-// Inicialização
+
 renderizarBacklog();
 
-// Dados fictícios (últimas 5 sprints)
-const sprintGrafico = ["Sprint 1", "Sprint 2", "Sprint 3", "Sprint 4", "Sprint 5"];
-const pontosConcluidos = [22, 27, 25, 30, 28]; // Pontos por sprint
-const metaPorSprint = 25; // Meta fictícia
 
-// Calcula a média
+const sprintGrafico = ["Sprint 1", "Sprint 2", "Sprint 3", "Sprint 4", "Sprint 5"];
+const pontosConcluidos = [22, 27, 25, 30, 28];
+const metaPorSprint = 25; 
+
 const media = pontosConcluidos.reduce((total, pontos) => total + pontos, 0) / pontosConcluidos.length;
 document.getElementById("media-velocidade").textContent = media.toFixed(1);
 
-// Cria o gráfico
 const ctx = document.getElementById('velocity-chart').getContext('2d');
 new Chart(ctx, {
     type: 'line',
@@ -179,7 +172,7 @@ new Chart(ctx, {
                 borderColor: '#FF9800',
                 borderDash: [5, 5],
                 borderWidth: 1,
-                pointRadius: 0 // Remove os pontos da linha de meta
+                pointRadius: 0 
             }
         ]
     },
@@ -207,30 +200,7 @@ new Chart(ctx, {
     }
 });
 
-// Simulação de dados
-let historias = [
-    { id: 1, titulo: "Implementar Login", descricao: "Criar tela de login e fluxo de autenticação.", pontos: 5, prioridade: "alta", status: "doing" },
-    { id: 2, titulo: "Criar Kanban", descricao: "Desenvolver a interface do Kanban com drag and drop.", pontos: 8, prioridade: "alta", status: "todo" },
-    { id: 3, titulo: "Integração com API", descricao: "Integrar o frontend com a API do backend.", pontos: 13, prioridade: "media", status: "backlog" },
-    { id: 4, titulo: "Testes unitários", descricao: "Escrever testes unitários para os componentes.", pontos: 3, prioridade: "baixa", status: "done" }
-];
 
-
-// Funções utilitárias
-function atualizarElemento(id, conteudo) {
-    const elemento = document.getElementById(id);
-    if (elemento) {
-        elemento.textContent = conteudo;
-    }
-}
-
-function criarElemento(tag, texto) {
-    const elemento = document.createElement(tag);
-    if (texto) {
-        elemento.textContent = texto;
-    }
-    return elemento;
-}
 
 function atualizarListaHistorias() {
     const listaHistorias = document.getElementById("lista-historias");
@@ -247,68 +217,6 @@ function atualizarListaHistorias() {
         itemHistoria.appendChild(criarElemento("p", `Status: ${historia.status}`));
 
         listaHistorias.appendChild(itemHistoria);
-    });
-}
-
-function atualizarKanban() {
-    const colunas = document.querySelectorAll("#kanban .column");
-    colunas.forEach(coluna => {
-        coluna.innerHTML = `<h3>${coluna.dataset.status}</h3>`;
-        const tarefasFiltradas = tarefas.filter(tarefa => tarefa.status === coluna.id && tarefa.historiaId === sprintAtual.id);
-
-        tarefasFiltradas.forEach(tarefa => {
-            const elementoTarefa = document.createElement("div");
-            elementoTarefa.textContent = tarefa.descricao;
-            elementoTarefa.draggable = true;
-            elementoTarefa.id = `tarefa-${tarefa.id}`;
-
-            elementoTarefa.addEventListener("dragstart", (event) => {
-                event.dataTransfer.setData("text/plain", tarefa.id);
-            });
-
-            coluna.appendChild(elementoTarefa);
-        });
-
-        coluna.addEventListener("dragover", (event) => {
-            event.preventDefault();
-        });
-
-        coluna.addEventListener("drop", (event) => {
-            event.preventDefault();
-            const tarefaId = parseInt(event.dataTransfer.getData("text/plain"), 10);
-            const tarefa = tarefas.find(t => t.id === tarefaId);
-
-            if (tarefa) {
-                tarefa.status = coluna.id;
-                atualizarKanban();
-            }
-        });
-    });
-}
-
-function adicionarDaily(){
-    const membro = document.getElementById("membro").value;
-    const ontem = document.getElementById("ontem").value;
-    const hoje = document.getElementById("hoje").value;
-    const impedimentos = document.getElementById("impedimentos").value;
-
-    const novoDaily = {membro,ontem,hoje,impedimentos};
-
-    dailyScrum.push(novoDaily);
-
-    atualizarDailyScrum();
-    document.getElementById("daily-form").reset();
-}
-
-function atualizarDailyScrum(){
-    const dailyList = document.getElementById("daily-list");
-    dailyList.innerHTML = "";
-
-    dailyScrum.forEach(daily => {
-        const listItem = document.createElement("li");
-        listItem.innerHTML = `<strong>${daily.membro}:</strong><br>Ontem: ${daily.ontem}<br>Hoje: ${daily.hoje}<br>Impedimentos: ${daily.impedimentos}`;
-
-        dailyList.appendChild(listItem);
     });
 }
 
@@ -337,28 +245,6 @@ function mostrarConteudo(sectionId) {
 }
 
 // Funções para manipular membros do time
-
-window.onclick = function(event) { /* ... (código anterior) */ };
-
-
-// Funções para o Dashboard
-function preencherDashboard() { /* ... (código anterior) */ }
-function calcularVelocidadeTime() { /* ... (código anterior) */ }
-function calcularHistoriasConcluídas() { /* ... (código anterior) */ }
-function criarColunasKanban() {
-    const kanban = document.getElementById('kanban');
-    const status = ['todo', 'doing', 'testing', 'done'];
-
-    status.forEach(s => {
-        const column = document.createElement('div');
-        column.classList.add('column');
-        column.id = s;
-        column.dataset.status = s.charAt(0).toUpperCase() + s.slice(1);
-        kanban.appendChild(column);
-    });
-
-    atualizarKanban();
-}
 
 const membrosTime = [];
 
@@ -435,7 +321,7 @@ function fecharModalMembro() {
 
 renderizarTime();
 
-
+// Funções para manipular as sprints
 
 
 const sprintTime = [];
