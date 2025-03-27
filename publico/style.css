@@ -633,3 +633,36 @@ button[type="submit"] {
     border-radius: 3px;
     cursor: pointer;
 }
+
+#lista-sprints {
+    list-style: none;
+}
+
+#lista-sprints li {
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+#lista-sprints li {
+    padding: 10px;
+    margin: 5px 0;
+    background: #f5f5f5;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#lista-sprints li span {
+    white-space: pre-line; /* Para manter as quebras de linha */
+}
+
+#lista-sprints li button.remover {
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}

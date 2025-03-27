@@ -66,16 +66,13 @@
         <section id="sprints" class="content">
             <h2>Sprints</h2>
             <div id="sprint-acoes"></div>
+            <ul id="lista-sprints"></ul>
             <h3>Sprint Backlog</h3>
             <div id="kanban"></div>
             <br>
             <div id="sprint-backlog-acoes">
                 <button id="adicionar-tarefa">Adicionar Tarefa</button>
             </div>
-
-            <h3>Daily Scrum</h3>
-            <form id="daily-form"></form>
-            <ul id="daily-list"></ul>
         </section>
 
         <section id="membros-time" class="content">
@@ -142,13 +139,13 @@
                 <h3 class="h3Modal">Criar/Editar História</h3>
                     <form id="form-sprint">
                         <div class="form-group">
-                            <input type="text" placeholder="Nome da Sprint" required>
+                            <input type="text" id = "sprint-nome" class="sprint-nome" placeholder="Nome da Sprint" required>
                         </div>
                         <div class="form-group">
-                            <input type="date" placeholder="Data de Inicio" required>
+                            <input type="date" id = "dataIn-sprint" class="dataIn-sprint" placeholder="Data de Inicio" required>
                         </div>
                         <div class="form-group">
-                            <input type="date" placeholder="Data de Término" required>
+                            <input type="date" id = "dataFim-sprint" class="dataFim-sprint" placeholder="Data de Término" required>
                         </div class="form-group">
                             <button type="submit">Salvar</button>
                     </form>

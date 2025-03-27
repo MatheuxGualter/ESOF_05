@@ -435,12 +435,79 @@ function fecharModalMembro() {
 
 renderizarTime();
 
-// Sprint
-document.getElementById('adicionar-tarefa').addEventListener('click', () => {
-    document.getElementById('modal-sprint').style.display = 'block';
-});
+
+
+
+const sprintTime = [];
 
 const modalSprint = document.getElementById("modal-sprint");
+const adicionarSprintBtn = document.getElementById("adicionar-tarefa");
+const formSprint = document.getElementById("form-sprint");
+const listaSprints = document.getElementById("lista-sprints");
+
+adicionarSprintBtn.onclick = function(){
+    formSprint.reset();
+    modalSprint.style.display = "block";
+};
+
+formSprint.onsubmit = function(event){
+    event.preventDefault();
+
+    // 2. Corrigido: adicionado .value para email e funcao
+    const nome = document.getElementById("sprint-nome").value;
+    const dataInicio = document.getElementById("dataIn-sprint").value;
+    const dataFim = document.getElementById("dataFim-sprint").value;
+
+    adicionarSprint(nome, dataInicio, dataFim);
+
+    fecharModalSprint();
+    return false;
+};
+
+function adicionarSprint(nome, dataInicio, dataFim){
+    const team = {  
+        nome,
+        dataInicio,
+        dataFim
+    };
+
+    sprintTime.push(team);
+    renderizarSprint();
+};
+
+function renderizarSprint(){
+    listaSprints.innerHTML = "";
+
+    // 3. Corrigido: mudado 'time' para 'team' para ser consistente
+    sprintTime.forEach(team => {
+        const li = document.createElement("li");
+        li.dataset.nome = team.nome;
+
+        const span = document.createElement("span");
+        span.textContent = `Nome: ${team.nome} \n Data Início: ${team.dataInicio} \n Data Fim: ${team.dataFim}`;
+
+        const removerBtn = document.createElement("button");
+        removerBtn.textContent = "X";
+        removerBtn.className = "remover";
+
+        // 4. Adicionada função removerMembro
+        removerBtn.onclick = () => {
+            const index = sprintTime.findIndex(m => m.nome === team.nome);
+            if (index !== -1) {
+                sprintTime.splice(index, 1);
+                renderizarTime();
+            }
+        };
+
+        li.appendChild(span);
+        li.appendChild(removerBtn);
+        
+        // 5. Faltava adicionar o li à lista
+        listaSprints.appendChild(li);
+    });
+}
+
+renderizarSprint();
 
 fecharModalSprint();
 
